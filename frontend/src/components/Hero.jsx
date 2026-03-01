@@ -51,10 +51,6 @@ const Hero = () => {
                     </div>
 
                     <div className="visual-card">
-                        <h3>Performance Matrix</h3>
-                        <p style={{ color: "var(--clr-text-muted)", fontSize: "0.9rem", marginBottom: "1rem" }}>
-                            Live Campaign Data
-                        </p>
                         <div className="chart-mockup">
                             <div className="chart-bar"></div>
                             <div className="chart-bar"></div>

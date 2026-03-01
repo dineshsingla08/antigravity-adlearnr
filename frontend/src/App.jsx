@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import StickyContact from './components/StickyContact';
+import LoadingScreen from './components/LoadingScreen';
 
 // Pages
 import Home from './pages/Home';
@@ -14,8 +15,19 @@ import CRM from './pages/CRM';
 import './styles.css';
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate initial loading
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Router>
+      {loading && <LoadingScreen />}
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

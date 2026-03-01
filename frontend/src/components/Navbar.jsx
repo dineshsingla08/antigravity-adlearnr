@@ -19,14 +19,12 @@ const Navbar = () => {
         <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
             <div className="container nav-container">
                 <Link to="/" className="logo">
-                    <div className="logo-icon" style={{ padding: '0', overflow: 'hidden', background: 'transparent', boxShadow: '0 0 15px var(--clr-primary-glow)' }}>
+                    <div className="logo-icon">
                         <img
-                            src="https://yt3.googleusercontent.com/llQcRkUugQhVmK7EMIauJ19gvJhKdGuFfqy6luWZv01EhoANrOnWWkuXvzLc_7sjLZaV4fJJaIo=s900-c-k-c0x00ffffff-no-rj"
+                            src="/assets/logo.png"
                             alt="Adlearnr Logo"
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />
                     </div>
-                    <span style={{ color: 'var(--clr-primary)' }}>Adlearnr</span>
                 </Link>
 
                 <ul className={`nav-links ${mobileMenuOpen ? 'active' : ''}`}>

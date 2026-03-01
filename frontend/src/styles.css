@@ -59,6 +59,7 @@
   --z-dropdown: 50;
   --z-sticky: 100;
   --z-modal: 1000;
+  --z-loading: 9999;
 }
 
 /* =========================================
@@ -376,19 +377,97 @@ img {
 .logo-icon {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  background: var(--grad-primary);
-  border-radius: 12px;
-  color: white;
-  font-size: 1.25rem;
-  box-shadow: 0 0 20px var(--clr-primary-glow);
+  justify-content: flex-start;
+  height: 65px;
+  width: auto;
+  min-width: 150px;
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
   transition: transform var(--trans-fast);
 }
 
+.logo-icon img {
+  height: 100%;
+  width: auto;
+  max-width: 300px;
+  object-fit: contain;
+}
+
 .logo:hover .logo-icon {
-  transform: rotate(-10deg) scale(1.05);
+  transform: scale(1.03);
+}
+
+/* Loading Screen */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: white;
+  z-index: var(--z-loading);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-logo-container {
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.loading-logo {
+  height: 100px;
+  width: auto;
+  margin-bottom: 2rem;
+  animation: logoPulse 1.5s ease-in-out infinite;
+}
+
+.loading-bar-wrapper {
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.loading-bar-fill {
+  width: 0;
+  height: 100%;
+  background: var(--grad-primary);
+  animation: fillBar 1.5s ease-in-out forwards;
+}
+
+.loading-text {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  color: var(--clr-text-muted);
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+
+@keyframes logoPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+@keyframes fillBar {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
 }
 
 .nav-links {
@@ -632,61 +711,41 @@ img {
 
 /* 3D Floating Visual Card */
 .visual-card {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(250, 250, 250, 0.9));
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: transparent;
+  border: none;
   border-radius: var(--radius-xl);
-  padding: var(--space-lg);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(0, 0, 0, 0.1);
+  padding: 0;
+  box-shadow: none;
   animation: float 8s ease-in-out infinite;
   transform-style: preserve-3d;
   position: relative;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
-/* Glowing outline for the hero card */
-.visual-card::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.5), rgba(139, 92, 246, 0.2), transparent 60%);
-  border-radius: var(--radius-xl);
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.visual-card:hover::after {
-  opacity: 1;
-}
-
-.visual-card h3 {
-  font-size: 1.5rem;
 }
 
 .chart-mockup {
   width: 100%;
-  height: 280px;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 50px;
-  margin-top: var(--space-sm);
+  height: 380px;
+  background: transparent;
+  margin-top: 0;
   position: relative;
-  overflow: hidden;
   display: flex;
   align-items: flex-end;
-  padding: 1.5rem;
+  padding: 0;
   gap: 1.5rem;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: none;
+  box-shadow: none;
 }
 
 .chart-bar {
   flex: 1;
-  background: var(--grad-primary);
   border-radius: 6px 6px 0 0;
-  opacity: 0.9;
+  opacity: 0.85;
   position: relative;
   transform-origin: bottom;
+  transition: opacity 0.3s ease;
+}
+
+.chart-bar:hover {
+  opacity: 1;
 }
 
 .chart-bar::after {
@@ -696,7 +755,7 @@ img {
   left: 0;
   right: 0;
   height: 4px;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 6px 6px 0 0;
 }
 
@@ -772,27 +831,36 @@ img {
 
 .chart-bar:nth-child(1) {
   height: 40%;
+  background: linear-gradient(to top, #1e5fba, #8a4cdb);
+  filter: drop-shadow(0 0 10px rgba(30, 95, 186, 0.4));
   animation: barGrow 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards, liveData1 4s ease-in-out infinite 1.5s;
 }
 
 .chart-bar:nth-child(2) {
   height: 60%;
+  background: linear-gradient(to top, #0ea5e9, #22d3ee);
+  filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.4));
   animation: barGrow 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards, liveData2 5s ease-in-out infinite 1.6s;
 }
 
 .chart-bar:nth-child(3) {
   height: 35%;
+  background: linear-gradient(to top, #6366f1, #818cf8);
+  filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.4));
   animation: barGrow 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards, liveData3 3.5s ease-in-out infinite 1.7s;
 }
 
 .chart-bar:nth-child(4) {
   height: 85%;
+  background: linear-gradient(to top, #f59e0b, #fbbf24);
+  filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.5));
   animation: barGrow 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards, liveData4 4.5s ease-in-out infinite 1.8s;
 }
 
 .chart-bar:nth-child(5) {
   height: 100%;
-  background: linear-gradient(to top, #047857, #10b981);
+  background: linear-gradient(to top, #10b981, #34d399);
+  filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.5));
   animation: barGrow 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards, liveData5 5.5s ease-in-out infinite 1.9s;
 }
 
