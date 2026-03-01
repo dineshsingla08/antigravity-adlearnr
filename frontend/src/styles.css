@@ -343,20 +343,19 @@ img {
   left: 0;
   width: 100%;
   z-index: var(--z-sticky);
-  padding: 1.5rem 0;
+  padding: 1rem 0;
   transition: all var(--trans-normal);
   background: transparent;
 }
 
 .navbar.scrolled {
   background: #ffffff;
-  /* Solid white for perfect multiply blending */
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* Perfectly matching white for seamless logo blending */
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
   padding: 0.8rem 0;
-  /* Slightly tighter on scroll */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.02);
 }
 
 .nav-container {
@@ -380,14 +379,13 @@ img {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  height: clamp(60px, 12vw, 80px);
-  /* Taller for better branding */
+  height: clamp(50px, 10vw, 65px);
+  /* Balanced height for the new owl icon + text */
   width: auto;
-  min-width: 350px;
-  /* Wide horizontal footprint for legibility */
-  max-width: 500px;
+  min-width: unset;
+  /* Remove forced horizontal stretch */
+  max-width: 300px;
   background: transparent;
-  /* No more white box */
   border-radius: 0;
   overflow: visible;
   transition: transform var(--trans-fast);
@@ -397,10 +395,9 @@ img {
   height: 100%;
   width: auto;
   object-fit: contain;
+  /* Keeping multiply as a safety for white backgrounds, but transparency is preferred */
   mix-blend-mode: multiply;
-  /* Technical transparency solution */
-  filter: contrast(1.1) brightness(1.02);
-  /* Enhances punch without adding shadows */
+  filter: contrast(1.05) brightness(1.02);
 }
 
 .logo:hover .logo-icon {
