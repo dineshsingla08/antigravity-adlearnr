@@ -21,7 +21,7 @@ const Navbar = () => {
                 <Link to="/" className="logo">
                     <div className="logo-icon">
                         <img
-                            src="/assets/logo.png"
+                            src="https://yt3.googleusercontent.com/FFMjXbcreDZDf6ytyk7oUK8HFpm2Nz5EssQuWzPzx2bqvdgO0We1wGe_r1PXvbMBlIyFkUe78g=w2120-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj"
                             alt="Adlearnr Logo"
                         />
                     </div>
