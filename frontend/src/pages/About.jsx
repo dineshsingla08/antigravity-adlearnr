@@ -17,7 +17,7 @@ const About = () => {
                         </h1>
                         <p className="hero-desc animate-fade-in-up delay-200" style={{ maxWidth: '750px', margin: '1rem auto' }}>
                             Adlearnr is a premier data-driven digital marketing agency dedicated to scaling ambitious brands.
-                            We don't just run ads; we build comprehensive, high-converting growth systems.
+                            We don't just run ads; we engineer growth systems tailored to your brand's unique needs.
                         </p>
                     </div>
                 </div>

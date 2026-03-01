@@ -14,7 +14,7 @@ const Services = () => {
                 <div className="section-header animate-fade-in-up">
                     <h2 className="section-title">Our Expertise <span className="text-gradient">Your Growth</span></h2>
                     <p className="section-subtitle">
-                        We don't just run ads; we engineer growth systems tailored to your brand's unique needs.
+                        We don't just run ads. We engineer growth systems tailored to your brand's unique needs.
                     </p>
                 </div>
 

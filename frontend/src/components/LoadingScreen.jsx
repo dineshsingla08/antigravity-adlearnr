@@ -5,13 +5,10 @@ const LoadingScreen = () => {
         <div className="loading-screen">
             <div className="loading-logo-container">
                 <img
-                    src="/assets/logo.png"
+                    src="/assets/loader.png"
                     alt="Adlearnr Logo"
                     className="loading-logo"
                 />
-                <div className="loading-bar-wrapper">
-                    <div className="loading-bar-fill"></div>
-                </div>
                 <p className="loading-text">Optimizing Your Growth...</p>
             </div>
         </div>
