@@ -3,21 +3,57 @@ import React, { useState, useEffect } from 'react';
 const CRM = () => {
     const [enquiries, setEnquiries] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [passwordInput, setPasswordInput] = useState('');
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/enquiries')
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    setEnquiries(data.enquiries);
-                }
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error("Error fetching CRM leads:", err);
-                setLoading(false);
-            });
-    }, []);
+        if (isAuthenticated) {
+            fetch('http://localhost:5000/api/enquiries')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        setEnquiries(data.enquiries);
+                    }
+                    setLoading(false);
+                })
+                .catch(err => {
+                    console.error("Error fetching CRM leads:", err);
+                    setLoading(false);
+                });
+        }
+    }, [isAuthenticated]);
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        if (passwordInput === 'admin123') { // Simple hardcoded password for now
+            setIsAuthenticated(true);
+        } else {
+            alert('Incorrect Admin Password');
+        }
+    };
+
+    if (!isAuthenticated) {
+        return (
+            <main className="crm-login" style={{ paddingTop: '150px', paddingBottom: '80px', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <div style={{ background: 'var(--clr-bg-card)', padding: '3rem', borderRadius: 'var(--radius-lg)', boxShadow: '0 10px 30px rgba(0,0,0,0.1)', textAlign: 'center', maxWidth: '400px', width: '100%' }}>
+                    <i className="fa-solid fa-lock fa-3x" style={{ color: 'var(--clr-primary)', marginBottom: '1.5rem' }}></i>
+                    <h2 style={{ marginBottom: '0.5rem' }}>Admin Access</h2>
+                    <p style={{ color: 'var(--clr-text-muted)', marginBottom: '2rem' }}>Please enter the CRM dashboard password to view secure leads.</p>
+                    <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <input
+                            type="password"
+                            placeholder="Enter Password"
+                            value={passwordInput}
+                            onChange={(e) => setPasswordInput(e.target.value)}
+                            style={{ padding: '1rem', borderRadius: '50px', border: '1px solid rgba(0,0,0,0.1)', width: '100%' }}
+                            required
+                        />
+                        <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>Access Leads</button>
+                    </form>
+                </div>
+            </main>
+        );
+    }
 
     return (
         <main className="crm-dashboard" style={{ paddingTop: '120px', paddingBottom: '80px', minHeight: '100vh', background: 'var(--clr-bg)' }}>
