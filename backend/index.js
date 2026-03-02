@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const db = require('./db');
+const { Client, LocalAuth } = require('whatsapp-web.js');
+const qrcode = require('qrcode-terminal');
 
 dotenv.config();
 
@@ -11,6 +13,32 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 
+// Initialize WhatsApp Web Client
+const client = new Client({
+    authStrategy: new LocalAuth()
+});
+
+let isWhatsappReady = false;
+
+client.on('qr', (qr) => {
+    console.log('\n======================================================');
+    console.log('📱 WHATSAPP AUTHENTICATION REQUIRED');
+    console.log('Please scan the QR code below with your WhatsApp:');
+    qrcode.generate(qr, { small: true });
+    console.log('======================================================\n');
+});
+
+client.on('ready', () => {
+    console.log('✅ WhatsApp Web client is ready and authenticated!');
+    isWhatsappReady = true;
+});
+
+client.on('auth_failure', msg => {
+    console.error('❌ WhatsApp Web authentication failed:', msg);
+});
+
+client.initialize();
+
 // POST /api/enquiries - Submit a new enquiry
 app.post('/api/enquiries', (req, res) => {
     const { name, email, company, phone, service, revenue, message } = req.body;
@@ -18,7 +46,7 @@ app.post('/api/enquiries', (req, res) => {
     const query = `INSERT INTO enquiries (name, email, company, phone, service, revenue, message) VALUES (?, ?, ?, ?, ?, ?, ?)`;
     const params = [name, email, company, phone, service, revenue, message];
 
-    db.run(query, params, function (err) {
+    db.run(query, params, async function (err) {
         if (err) {
             console.error('Failed to insert enquiry:', err.message);
             return res.status(500).json({ error: 'Failed to process enquiry' });
@@ -27,25 +55,21 @@ app.post('/api/enquiries', (req, res) => {
         const enquiryId = this.lastID;
         console.log(`New enquiry stored in CRM: ID ${enquiryId} from ${name} at ${company}`);
 
-        // --- WHATSAPP INTEGRATION via Twilio ---
-        const accountSid = process.env.TWILIO_ACCOUNT_SID;
-        const authToken = process.env.TWILIO_AUTH_TOKEN;
-        const twilioPhone = process.env.TWILIO_PHONE_NUMBER;
+        // --- WHATSAPP INTEGRATION via whatsapp-web.js ---
+        const textMsg = `*New Lead from Website!* 🚀\n\n*Name:* ${name}\n*Email:* ${email}\n*Company:* ${company}\n*Phone:* ${phone || 'Not provided'}\n*Service:* ${service}\n*Revenue:* ${revenue}\n*Message:* ${message || 'Not provided'}`;
 
-        if (accountSid && authToken && twilioPhone) {
-            const client = require('twilio')(accountSid, authToken);
-            const textMsg = `*New Lead from Website!* 🚀\n\n*Name:* ${name}\n*Email:* ${email}\n*Company:* ${company}\n*Phone:* ${phone || 'Not provided'}\n*Service:* ${service}\n*Revenue:* ${revenue}\n*Message:* ${message || 'Not provided'}`;
-
-            client.messages.create({
-                body: textMsg,
-                from: `whatsapp:${twilioPhone}`,
-                to: 'whatsapp:+918958573159'
-            })
-                .then(message => console.log('WhatsApp notification sent successfully:', message.sid))
-                .catch(err => console.error('Error sending WhatsApp notification via Twilio:', err.message));
+        if (isWhatsappReady) {
+            try {
+                // Formatting Indian numbers properly for whatsapp-web.js protocol
+                const chatId = '918958573159@c.us';
+                await client.sendMessage(chatId, textMsg);
+                console.log('WhatsApp notification sent successfully to yourself!');
+            } catch (w_err) {
+                console.error('Error sending WhatsApp notification natively:', w_err);
+            }
         } else {
-            console.log("No Twilio credentials found in .env! Cannot send actual WhatsApp message.");
-            console.log("MOCK WHATSAPP MESSAGE -> 'New Enquiry from " + name + "! | phone: " + phone + "'");
+            console.log("⚠️ WhatsApp Client not ready yet. Skipping message send.");
+            console.log("MOCK WHATSAPP MESSAGE -> 'New Enquiry from " + name + "!'");
         }
 
         res.status(201).json({
