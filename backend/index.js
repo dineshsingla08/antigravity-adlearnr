@@ -27,32 +27,26 @@ app.post('/api/enquiries', (req, res) => {
         const enquiryId = this.lastID;
         console.log(`New enquiry stored in CRM: ID ${enquiryId} from ${name} at ${company}`);
 
-        // --- WHATSAPP INTEGRATION ---
-        // To send an automated WhatsApp message to your own number, you would typically use an API like Twilio.
-        // Example Twilio Implementation (requires TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER):
-
-        /*
+        // --- WHATSAPP INTEGRATION via Twilio ---
         const accountSid = process.env.TWILIO_ACCOUNT_SID;
         const authToken = process.env.TWILIO_AUTH_TOKEN;
-        if (accountSid && authToken) {
+        const twilioPhone = process.env.TWILIO_PHONE_NUMBER;
+
+        if (accountSid && authToken && twilioPhone) {
             const client = require('twilio')(accountSid, authToken);
-            const textMsg = `New Lead! 🙌\n\nName: ${name}\nCompany: ${company}\nPhone: ${phone}\nService: ${service}\nRevenue: ${revenue}\nMessage: ${message}`;
-            
+            const textMsg = `*New Lead from Website!* 🚀\n\n*Name:* ${name}\n*Email:* ${email}\n*Company:* ${company}\n*Phone:* ${phone || 'Not provided'}\n*Service:* ${service}\n*Revenue:* ${revenue}\n*Message:* ${message || 'Not provided'}`;
+
             client.messages.create({
                 body: textMsg,
-                from: `whatsapp:${process.env.TWILIO_PHONE_NUMBER}`,
+                from: `whatsapp:${twilioPhone}`,
                 to: 'whatsapp:+918958573159'
             })
-            .then(message => console.log('WhatsApp notification sent:', message.sid))
-            .catch(err => console.error('Error sending WhatsApp:', err));
+                .then(message => console.log('WhatsApp notification sent successfully:', message.sid))
+                .catch(err => console.error('Error sending WhatsApp notification via Twilio:', err.message));
         } else {
-            console.log("No Twilio credentials found. Mocking WhatsApp message send.");
-            console.log("MOCK WHATSAPP MESSAGE -> 'New Lead from " + name + "!'");
+            console.log("No Twilio credentials found in .env! Cannot send actual WhatsApp message.");
+            console.log("MOCK WHATSAPP MESSAGE -> 'New Enquiry from " + name + "! | phone: " + phone + "'");
         }
-        */
-
-        // Simple console mock for local dev
-        console.log("MOCK WHATSAPP MESSAGE -> 'New Enquiry from " + name + "! | phone: " + phone + "'");
 
         res.status(201).json({
             success: true,
