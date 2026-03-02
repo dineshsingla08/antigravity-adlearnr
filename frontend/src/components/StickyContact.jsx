@@ -45,7 +45,7 @@ const StickyContact = () => {
 
                 {showPhone && (
                     <a
-                        href="tel:+918958573159"
+                        href="tel:+919729526111"
                         style={{
                             color: 'white',
                             textDecoration: 'none',
@@ -55,14 +55,14 @@ const StickyContact = () => {
                         }}
                         onClick={(e) => e.stopPropagation()}
                     >
-                        +91 8958573159
+                        +91 9729526111
                     </a>
                 )}
             </div>
 
             {/* Sticky WhatsApp Icon */}
             <a
-                href="https://wa.me/918958573159"
+                href="https://wa.me/919729526111"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="whatsapp-sticky"

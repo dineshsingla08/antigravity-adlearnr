@@ -61,7 +61,7 @@ app.post('/api/enquiries', (req, res) => {
         if (isWhatsappReady) {
             try {
                 // Formatting Indian numbers properly for whatsapp-web.js protocol
-                const chatId = '918958573159@c.us';
+                const chatId = '919729526111@c.us';
                 await client.sendMessage(chatId, textMsg);
                 console.log('WhatsApp notification sent successfully to yourself!');
             } catch (w_err) {
