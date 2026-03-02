@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { blogPosts } from '../data/blogData';
 
 const Blog = () => {
     // Scroll to top when loading the blog page
@@ -6,95 +8,74 @@ const Blog = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, []);
 
-    const blogPosts = [
-        {
-            title: "5 Proven Strategies to Boost Your ROAS on Meta Ads",
-            date: "Oct 24, 2023",
-            category: "Meta Ads",
-            excerpt: "Learn how we helped a leading eCommerce client increase their return on ad spend from 2.5X to 5X in just 30 days using advanced audience targeting...",
-            readTime: "5 min read",
-        },
-        {
-            title: "The Ultimate Guide to B2B Lead Generation on LinkedIn",
-            date: "Nov 02, 2023",
-            category: "LinkedIn",
-            excerpt: "B2B marketing requires precision. Discover our blueprint for capturing high-intent leads on LinkedIn without wasting your marketing budget.",
-            readTime: "8 min read",
-        },
-        {
-            title: "Search Engine Optimization: Beyond the Basics in 2024",
-            date: "Nov 15, 2023",
-            category: "SEO",
-            excerpt: "Ranking on the first page of Google is getting harder. Here are the technical SEO techniques that are moving the needle right now.",
-            readTime: "6 min read",
-        },
-        {
-            title: "How to Scale an Activewear Brand to ₹2Cr/Month",
-            date: "Dec 05, 2023",
-            category: "Case Study",
-            excerpt: "A deep dive into the campaign structure, creative strategies, and scaling methods we used to 10X an Indian activewear startup.",
-            readTime: "10 min read",
-        },
-        {
-            title: "Navigating the New Google Ads Updates",
-            date: "Jan 12, 2024",
-            category: "Google Ads",
-            excerpt: "Google's latest algorithm update changes how Performance Max campaigns work. Keep your campaigns profitable by following these tips.",
-            readTime: "4 min read",
-        },
-        {
-            title: "Why Most Agency Audits Miss the Mark",
-            date: "Feb 08, 2024",
-            category: "Strategy",
-            excerpt: "Are you losing money without knowing it? Understand the common pitfalls in ad accounts that superficial audits completely overlook.",
-            readTime: "7 min read",
-        }
-    ];
-
     return (
         <main className="blog-page">
-            <section className="hero" style={{ paddingBottom: '3rem', minHeight: '50vh', alignContent: 'center' }}>
-                <div className="container">
-                    <div className="section-header" style={{ marginBottom: '2rem', textAlign: 'center' }}>
+            <section className="hero" style={{ padding: '8rem 0 4rem', minHeight: '50vh', position: 'relative', overflow: 'hidden' }}>
+                <div className="section-glow" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '60vw', height: '60vw', background: 'radial-gradient(circle, rgba(138,76,219,0.15) 0%, transparent 70%)', zIndex: 0, pointerEvents: 'none' }}></div>
+                <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+                    <div className="section-header" style={{ marginBottom: '2rem' }}>
                         <div className="hero-badge animate-fade-in-up" style={{ margin: '0 auto 1.5rem' }}>Our Insights</div>
-                        <h1 className="hero-title animate-fade-in-up delay-100" style={{ fontSize: '3.5rem' }}>
+                        <h1 className="hero-title animate-fade-in-up delay-100" style={{ fontSize: '4rem' }}>
                             Digital <span className="text-gradient">Marketing Blog</span>
                         </h1>
-                        <p className="hero-desc animate-fade-in-up delay-200" style={{ maxWidth: '700px', margin: '1rem auto' }}>
+                        <p className="hero-desc animate-fade-in-up delay-200" style={{ maxWidth: '700px', margin: '1.5rem auto 0', fontSize: '1.2rem' }}>
                             Actionable strategies, deep-dive case studies, and industry news to help you stay ahead of the curve and dominate your market.
                         </p>
                     </div>
                 </div>
             </section>
 
-            <section className="section bg-light" style={{ paddingTop: '2rem' }}>
+            <section className="section bg-light" style={{ paddingBottom: '6rem' }}>
                 <div className="container">
                     <div className="blog-grid" style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-                        gap: '2rem'
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+                        gap: '2.5rem'
                     }}>
                         {blogPosts.map((post, index) => (
-                            <div key={index} className="service-card animate-fade-in-up" style={{
+                            <Link to={`/blog/${post.id}`} key={index} className="blog-card-link animate-fade-in-up" style={{
                                 animationDelay: `${index * 100}ms`,
-                                border: 'none',
-                                boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
+                                border: '1px solid var(--clr-border)',
+                                borderRadius: '1.5rem',
+                                background: 'var(--clr-bg-card)',
+                                overflow: 'hidden',
                                 display: 'flex',
                                 flexDirection: 'column',
-                                textAlign: 'left',
-                                padding: '2.5rem'
-                            }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', fontSize: '0.875rem' }}>
-                                    <span style={{ color: 'var(--clr-primary)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '1px' }}>{post.category}</span>
-                                    <span style={{ color: 'var(--clr-text-muted)' }}>{post.readTime}</span>
+                                textDecoration: 'none',
+                                color: 'inherit',
+                                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                                boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+                            }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(-10px)';
+                                    e.currentTarget.style.boxShadow = '0 20px 40px rgba(138,76,219,0.15)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+                                }}>
+                                <div className="blog-image-wrapper" style={{ height: '240px', overflow: 'hidden', position: 'relative' }}>
+                                    <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }}
+                                        className="blog-image"
+                                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                                    />
+                                    <div style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'var(--clr-primary)', color: 'white', padding: '0.4rem 1rem', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 'bold', textTransform: 'uppercase', boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }}>
+                                        {post.category}
+                                    </div>
                                 </div>
-                                <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', lineHeight: '1.4' }}>{post.title}</h3>
-                                <p style={{ color: 'var(--clr-text-muted)', marginBottom: '1.5rem', flexGrow: '1' }}>{post.excerpt}</p>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <span style={{ color: 'var(--clr-text-muted)', fontSize: '0.9rem' }}>{post.date}</span>
-                                    <a href="#" className="service-link" style={{ margin: '0' }}>Read More <i className="fa-solid fa-arrow-right"></i></a>
+                                <div style={{ padding: '2rem', flexGrow: '1', display: 'flex', flexDirection: 'column' }}>
+                                    <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', lineHeight: '1.4', color: 'var(--clr-text-main)' }}>{post.title}</h3>
+                                    <p style={{ color: 'var(--clr-text-muted)', marginBottom: '1.5rem', flexGrow: '1', lineHeight: '1.6' }}>{post.excerpt}</p>
+
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--clr-border)', paddingTop: '1.5rem', marginTop: 'auto' }}>
+                                        <div style={{ display: 'flex', gap: '1rem', color: 'var(--clr-text-muted)', fontSize: '0.9rem' }}>
+                                            <span><i className="fa-regular fa-calendar" style={{ marginRight: '0.4rem' }}></i> {post.date}</span>
+                                            <span><i className="fa-regular fa-clock" style={{ marginRight: '0.4rem' }}></i> {post.readTime}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </div>

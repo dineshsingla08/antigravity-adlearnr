@@ -1,16 +1,71 @@
 import React from 'react';
 import { useIntersect } from '../hooks/useIntersect';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
+import { Autoplay, EffectFade } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/autoplay';
+import 'swiper/css/effect-fade';
 
 const Services = () => {
     const containerRef = useIntersect({ threshold: 0.1 });
 
+    const services = [
+        {
+            title: "Performance Marketing & Ads",
+            desc: "Meta, Google, LinkedIn, TikTok, & Amazon Campaigns.",
+            icon: "fa-bullseye",
+            delay: "100ms"
+        },
+        {
+            title: "Search Engine Optimization",
+            desc: "Rank higher organically and capture high-intent search traffic.",
+            icon: "fa-trophy",
+            delay: "200ms"
+        },
+        {
+            title: "Social Media Management",
+            desc: "Organic growth, community building, and brand identity on social platforms.",
+            icon: "fa-hashtag",
+            delay: "300ms"
+        },
+        {
+            title: "Content & Video Production",
+            desc: "Scroll-stopping ad creatives, Reels, TikToks, and graphic design.",
+            icon: "fa-video",
+            delay: "400ms"
+        },
+        {
+            title: "Email & Retention Marketing",
+            desc: "Automated email flows, newsletters, and SMS marketing for LTV.",
+            icon: "fa-envelope-open-text",
+            delay: "500ms"
+        },
+        {
+            title: "Conversion Rate Optimization",
+            desc: "Landing page testing, user behavior analysis, and UI/UX audits.",
+            icon: "fa-chart-pie",
+            delay: "600ms"
+        },
+        {
+            title: "Lead Gen & eCommerce",
+            desc: "End-to-end B2B/B2C strategies to maximize your sales pipeline.",
+            icon: "fa-funnel-dollar",
+            delay: "700ms"
+        },
+        {
+            title: "Strategy & Consultation",
+            desc: "Media planning, ad account audits, and one-on-one consulting.",
+            icon: "fa-chess-knight",
+            delay: "800ms"
+        }
+    ];
+
     return (
-        <section className="services section" id="services">
-            <div className="container" ref={containerRef}>
+        <section className="services section" id="services" style={{ position: 'relative', overflow: 'hidden' }}>
+            {/* Subtle background glow for the whole section to blend it */}
+            <div className="section-glow" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80vw', height: '80vw', background: 'radial-gradient(circle, rgba(138,76,219,0.05) 0%, transparent 60%)', zIndex: 0, pointerEvents: 'none' }}></div>
+
+            <div className="container" ref={containerRef} style={{ position: 'relative', zIndex: 1 }}>
                 <div className="section-header animate-fade-in-up">
                     <h2 className="section-title">Our Expertise <span className="text-gradient">Your Growth</span></h2>
                     <p className="section-subtitle">
@@ -18,75 +73,24 @@ const Services = () => {
                     </p>
                 </div>
 
-                <div className="services-slider-container" style={{ marginTop: '3rem', paddingBottom: '2rem' }}>
-                    <Swiper
-                        spaceBetween={20}
-                        slidesPerView={1}
-                        loop={true}
-                        autoplay={{ delay: 3000, disableOnInteraction: false }}
-                        breakpoints={{
-                            768: { slidesPerView: 1.2, spaceBetween: 30 },
-                            1024: { slidesPerView: 2, spaceBetween: 40 },
-                        }}
-                        modules={[Autoplay]}
-                        className="services-swiper pb-4"
-                    >
-                        {/* Service 1 */}
-                        <SwiperSlide>
-                            <div className="service-row" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '2.5rem', background: 'var(--clr-bg-dark)', borderRadius: '1rem', boxShadow: '0 5px 20px rgba(0,0,0,0.03)', transition: 'all 0.3s ease', gap: '1.5rem' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(30,95,186,0.1)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 5px 20px rgba(0,0,0,0.03)'; }}>
-                                <div className="service-icon" style={{ margin: '0', background: 'linear-gradient(135deg, rgba(30,95,186,0.1), rgba(138,76,219,0.1))', width: '70px', height: '70px', borderRadius: '15px', color: 'var(--clr-primary)' }}><i className="fa-solid fa-bullseye" style={{ fontSize: '2rem' }}></i></div>
-                                <div style={{ flexGrow: 1 }}>
-                                    <h3 style={{ fontSize: '1.75rem', margin: '0 0 0.5rem 0' }}>Performance Marketing & Ads</h3>
-                                    <p style={{ color: 'var(--clr-text-muted)', margin: 0, fontSize: '1.05rem', lineHeight: 1.6 }}>Meta, LinkedIn, SEM, Native, & Amazon Campaigns.</p>
+                <div className="services-list-container" style={{ marginTop: '4rem', paddingBottom: '2rem' }}>
+                    <div className="services-blend-grid">
+                        {services.map((svc, idx) => (
+                            <div key={idx} className={`service-seamless animate-fade-in-up`} style={{ animationDelay: svc.delay }}>
+                                <div className="service-icon-wrapper">
+                                    <i className={`fa-solid ${svc.icon}`}></i>
                                 </div>
-                                <div>
-                                    <a href="/#contact" className="service-link" style={{ display: 'inline-flex', padding: '0.75rem 1.5rem', background: 'var(--clr-bg-darker)', borderRadius: '50px', transition: 'all 0.3s' }}>Explore <i className="fa-solid fa-arrow-right"></i></a>
+                                <div className="service-content-wrapper">
+                                    <h3>{svc.title}</h3>
+                                    <p>{svc.desc}</p>
+                                    <a href="/#contact" className="service-link-animated">
+                                        <span>Explore</span>
+                                        <i className="fa-solid fa-arrow-right"></i>
+                                    </a>
                                 </div>
                             </div>
-                        </SwiperSlide>
-
-                        {/* Service 2 */}
-                        <SwiperSlide>
-                            <div className="service-row" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '2.5rem', background: 'var(--clr-bg-dark)', borderRadius: '1rem', boxShadow: '0 5px 20px rgba(0,0,0,0.03)', transition: 'all 0.3s ease', gap: '1.5rem' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(30,95,186,0.1)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 5px 20px rgba(0,0,0,0.03)'; }}>
-                                <div className="service-icon" style={{ margin: '0', background: 'linear-gradient(135deg, rgba(30,95,186,0.1), rgba(138,76,219,0.1))', width: '70px', height: '70px', borderRadius: '15px', color: 'var(--clr-primary)' }}><i className="fa-solid fa-chart-line" style={{ fontSize: '2rem' }}></i></div>
-                                <div style={{ flexGrow: 1 }}>
-                                    <h3 style={{ fontSize: '1.75rem', margin: '0 0 0.5rem 0' }}>Lead Gen & eCommerce</h3>
-                                    <p style={{ color: 'var(--clr-text-muted)', margin: 0, fontSize: '1.05rem', lineHeight: 1.6 }}>End-to-end B2B/B2C strategies to maximize your sales pipeline.</p>
-                                </div>
-                                <div>
-                                    <a href="/#contact" className="service-link" style={{ display: 'inline-flex', padding: '0.75rem 1.5rem', background: 'var(--clr-bg-darker)', borderRadius: '50px', transition: 'all 0.3s' }}>Explore <i className="fa-solid fa-arrow-right"></i></a>
-                                </div>
-                            </div>
-                        </SwiperSlide>
-
-                        {/* Service 3 */}
-                        <SwiperSlide>
-                            <div className="service-row" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '2.5rem', background: 'var(--clr-bg-dark)', borderRadius: '1rem', boxShadow: '0 5px 20px rgba(0,0,0,0.03)', transition: 'all 0.3s ease', gap: '1.5rem' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(30,95,186,0.1)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 5px 20px rgba(0,0,0,0.03)'; }}>
-                                <div className="service-icon" style={{ margin: '0', background: 'linear-gradient(135deg, rgba(30,95,186,0.1), rgba(138,76,219,0.1))', width: '70px', height: '70px', borderRadius: '15px', color: 'var(--clr-primary)' }}><i className="fa-solid fa-trophy" style={{ fontSize: '2rem' }}></i></div>
-                                <div style={{ flexGrow: 1 }}>
-                                    <h3 style={{ fontSize: '1.75rem', margin: '0 0 0.5rem 0' }}>Search Engine Optimization</h3>
-                                    <p style={{ color: 'var(--clr-text-muted)', margin: 0, fontSize: '1.05rem', lineHeight: 1.6 }}>Rank higher organically and capture high-intent search traffic.</p>
-                                </div>
-                                <div>
-                                    <a href="/#contact" className="service-link" style={{ display: 'inline-flex', padding: '0.75rem 1.5rem', background: 'var(--clr-bg-darker)', borderRadius: '50px', transition: 'all 0.3s' }}>Explore <i className="fa-solid fa-arrow-right"></i></a>
-                                </div>
-                            </div>
-                        </SwiperSlide>
-
-                        {/* Service 4 */}
-                        <SwiperSlide>
-                            <div className="service-row" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '2.5rem', background: 'var(--clr-bg-dark)', borderRadius: '1rem', boxShadow: '0 5px 20px rgba(0,0,0,0.03)', transition: 'all 0.3s ease', gap: '1.5rem' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(30,95,186,0.1)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 5px 20px rgba(0,0,0,0.03)'; }}>
-                                <div className="service-icon" style={{ margin: '0', background: 'linear-gradient(135deg, rgba(30,95,186,0.1), rgba(138,76,219,0.1))', width: '70px', height: '70px', borderRadius: '15px', color: 'var(--clr-primary)' }}><i className="fa-solid fa-lightbulb" style={{ fontSize: '2rem' }}></i></div>
-                                <div style={{ flexGrow: 1 }}>
-                                    <h3 style={{ fontSize: '1.75rem', margin: '0 0 0.5rem 0' }}>Strategy & Consultation</h3>
-                                    <p style={{ color: 'var(--clr-text-muted)', margin: 0, fontSize: '1.05rem', lineHeight: 1.6 }}>Media planning, ad account auditing, and one-on-one consulting.</p>
-                                </div>
-                                <div>
-                                    <a href="/#contact" className="service-link" style={{ display: 'inline-flex', padding: '0.75rem 1.5rem', background: 'var(--clr-bg-darker)', borderRadius: '50px', transition: 'all 0.3s' }}>Explore <i className="fa-solid fa-arrow-right"></i></a>
-                                </div>
-                            </div>
-                        </SwiperSlide>
-                    </Swiper>
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>

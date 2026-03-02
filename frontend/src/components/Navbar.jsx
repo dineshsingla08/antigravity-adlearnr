@@ -38,14 +38,18 @@ const Navbar = () => {
                         </div>
                         {dropdownOpen && (
                             <ul className="dropdown-menu">
-                                <li><a href="/#contact" onClick={() => { setDropdownOpen(false); setMobileMenuOpen(false); }}>Performance Marketing</a></li>
+                                <li><a href="/#contact" onClick={() => { setDropdownOpen(false); setMobileMenuOpen(false); }}>Performance Marketing & Ads</a></li>
+                                <li><a href="/#contact" onClick={() => { setDropdownOpen(false); setMobileMenuOpen(false); }}>Search Engine Optimization</a></li>
+                                <li><a href="/#contact" onClick={() => { setDropdownOpen(false); setMobileMenuOpen(false); }}>Social Media Management</a></li>
+                                <li><a href="/#contact" onClick={() => { setDropdownOpen(false); setMobileMenuOpen(false); }}>Content & Video Production</a></li>
+                                <li><a href="/#contact" onClick={() => { setDropdownOpen(false); setMobileMenuOpen(false); }}>Email & Retention Marketing</a></li>
+                                <li><a href="/#contact" onClick={() => { setDropdownOpen(false); setMobileMenuOpen(false); }}>Conversion Rate Optimization</a></li>
                                 <li><a href="/#contact" onClick={() => { setDropdownOpen(false); setMobileMenuOpen(false); }}>Lead Gen & eCommerce</a></li>
-                                <li><a href="/#contact" onClick={() => { setDropdownOpen(false); setMobileMenuOpen(false); }}>SEO</a></li>
                                 <li><a href="/#contact" onClick={() => { setDropdownOpen(false); setMobileMenuOpen(false); }}>Strategy & Consultation</a></li>
                             </ul>
                         )}
                     </li>
-                    <li><Link to="/#packages" onClick={() => setMobileMenuOpen(false)}>Clients & Results</Link></li>
+                    <li><Link to="/clients" onClick={() => setMobileMenuOpen(false)}>Clients & Results</Link></li>
                     <li><Link to="/about" onClick={() => setMobileMenuOpen(false)}>About Us</Link></li>
                     <li><Link to="/blog" onClick={() => setMobileMenuOpen(false)}>Blog</Link></li>
                 </ul>
