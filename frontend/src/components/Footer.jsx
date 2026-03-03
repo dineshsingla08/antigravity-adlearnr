@@ -10,6 +10,7 @@ const Footer = () => {
                             <img
                                 src="/assets/logo.png"
                                 alt="Adlearnr Logo"
+                                loading="lazy"
                             />
                         </div>
                     </a>

@@ -55,7 +55,7 @@ const Blog = () => {
                                     e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
                                 }}>
                                 <div className="blog-image-wrapper" style={{ height: '240px', overflow: 'hidden', position: 'relative' }}>
-                                    <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }}
+                                    <img src={post.image} alt={post.title} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }}
                                         className="blog-image"
                                         onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
                                         onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}

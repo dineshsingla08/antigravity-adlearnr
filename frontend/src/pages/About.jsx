@@ -30,7 +30,7 @@ const About = () => {
                     <div className="about-grid animate-fade-in-up delay-300" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '4rem', alignItems: 'center' }}>
                         <div className="about-image-wrapper" style={{ position: 'relative', borderRadius: '1.5rem', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.2)' }}>
                             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(45deg, rgba(138,76,219,0.2) 0%, transparent 100%)', zIndex: 1 }}></div>
-                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" alt="Team collaborating" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" alt="Team collaborating" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                         </div>
                         <div className="about-text">
                             <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--clr-text-main)' }}>Our <span className="text-gradient">Mission</span></h2>
