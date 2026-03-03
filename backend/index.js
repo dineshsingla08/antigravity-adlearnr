@@ -80,6 +80,37 @@ app.get('/api/enquiries', (req, res) => {
     });
 });
 
+// DELETE /api/enquiries/:id - Delete an enquiry from the CRM dashboard
+app.delete('/api/enquiries/:id', (req, res) => {
+    const { id } = req.params;
+    db.run(`DELETE FROM enquiries WHERE id = ?`, [id], function (err) {
+        if (err) {
+            console.error(`Failed to delete CRM enquiry ID ${id}:`, err.message);
+            return res.status(500).json({ error: 'Failed to delete enquiry' });
+        }
+        if (this.changes === 0) {
+            return res.status(404).json({ error: 'Enquiry not found' });
+        }
+        res.status(200).json({ success: true, message: 'Enquiry deleted successfully' });
+    });
+});
+
+// PUT /api/enquiries/:id/status - Update enquiry status
+app.put('/api/enquiries/:id/status', (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+    db.run(`UPDATE enquiries SET status = ? WHERE id = ?`, [status, id], function (err) {
+        if (err) {
+            console.error(`Failed to update status for CRM enquiry ID ${id}:`, err.message);
+            return res.status(500).json({ error: 'Failed to update status' });
+        }
+        if (this.changes === 0) {
+            return res.status(404).json({ error: 'Enquiry not found' });
+        }
+        res.status(200).json({ success: true, message: 'Status updated successfully', status });
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`Backend CRM server running on http://localhost:${PORT}`);
 });
